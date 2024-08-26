@@ -12,15 +12,15 @@ import { errorMiddleware } from "./middlewares/error.js";
 const app = express();
 
 // Setup CORS
-const frontendURL = 'http://localhost:5173'; // 5173 becoz we use vite here
+const frontendURLs = ['http://localhost:5173', 'https://e-job-seeker.netlify.app']; // Array of allowed frontend URLs
 
 app.use(
-    cors({
-      origin: [frontendURL], // here we use array -> ho skta hum apne project ko 2 ya 3 frontend se individually link krna chahte ho , yha ek hi he
-      method: ["GET", "POST", "DELETE", "PUT"], //project k andar konsi methods use krna chahte
-      credentials: true,
-    })
-  );
+  cors({
+    origin: frontendURLs, // Allow requests from both local development and production Netlify app
+    methods: ['GET', 'POST', 'DELETE', 'PUT'], // Allow specific HTTP methods
+    credentials: true, // Enable credentials (cookies, authorization headers, etc.)
+  })
+);
 
 app.use(cookieParser()); //used for authorization
 app.use(express.json()); //parse only json
